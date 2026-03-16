@@ -35,10 +35,10 @@ async function reverseGeocode(lat: number, lon: number): Promise<string> {
       data.address?.town ||
       data.address?.village ||
       data.address?.county ||
-      'Your Location'
+      'Current Location'
     );
   } catch {
-    return 'Your Location';
+    return 'Current Location';
   }
 }
 
@@ -53,44 +53,64 @@ export const AirQualityProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const [dataLoading, setDataLoading] = useState(false);
 
   useEffect(() => {
-    if (!navigator.geolocation) {
-      setCityName('Delhi NCR');
-      setLocationStatus('denied');
-      return;
-    }
+    const fetchWithIpFallback = async () => {
+      try {
+        const res = await fetch('https://ipapi.co/json/');
+        const data = await res.json();
+        if (data && data.latitude && data.longitude) {
+          return { lat: data.latitude, lon: data.longitude, city: data.city || 'Current Location' };
+        }
+      } catch (e) {
+        console.error('IP Geolocation fallback failed', e);
+      }
+      return null;
+    };
+
+    const handleSuccess = async (latitude: number, longitude: number, nameFallback?: string) => {
+      setLocationStatus('granted');
+      setCoords([latitude, longitude]);
+
+      const name = nameFallback || await reverseGeocode(latitude, longitude);
+      setCityName(name);
+
+      setDataLoading(true);
+      try {
+        const realStations = await fetchRealStations(latitude, longitude);
+        setStations(prev => realStations.map(s => {
+          const old = prev.find(p => p.id === s.id);
+          return {
+            ...s,
+            trend: old ? (s.aqi > old.aqi ? 'up' : s.aqi < old.aqi ? 'down' : 'stable') : 'stable',
+          };
+        }));
+        setLastUpdated(new Date());
+      } catch (e) {
+        console.error('Failed to fetch real AQI data:', e);
+      } finally {
+        setDataLoading(false);
+      }
+    };
+
+    const handleError = async () => {
+      const ipData = await fetchWithIpFallback();
+      if (ipData) {
+        handleSuccess(ipData.lat, ipData.lon, ipData.city);
+      } else {
+        setCityName('Current Location');
+        setLocationStatus('denied');
+      }
+    };
 
     setLocationStatus('loading');
 
+    if (!navigator.geolocation) {
+      handleError();
+      return;
+    }
+
     navigator.geolocation.getCurrentPosition(
-      async (pos) => {
-        const { latitude, longitude } = pos.coords;
-        setLocationStatus('granted');
-        setCoords([latitude, longitude]);
-
-        const name = await reverseGeocode(latitude, longitude);
-        setCityName(name);
-
-        setDataLoading(true);
-        try {
-          const realStations = await fetchRealStations(latitude, longitude);
-          setStations(prev => realStations.map(s => {
-            const old = prev.find(p => p.id === s.id);
-            return {
-              ...s,
-              trend: old ? (s.aqi > old.aqi ? 'up' : s.aqi < old.aqi ? 'down' : 'stable') : 'stable',
-            };
-          }));
-          setLastUpdated(new Date());
-        } catch (e) {
-          console.error('Failed to fetch real AQI data:', e);
-        } finally {
-          setDataLoading(false);
-        }
-      },
-      () => {
-        setCityName('Delhi NCR');
-        setLocationStatus('denied');
-      },
+      (pos) => handleSuccess(pos.coords.latitude, pos.coords.longitude),
+      handleError,
       { timeout: 8000 }
     );
   }, []);

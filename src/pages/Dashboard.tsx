@@ -1,5 +1,5 @@
 import { useEffect, useRef, useCallback } from 'react';
-import { MapContainer, TileLayer, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, useMap, Circle } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useAirQuality } from '@/context/AirQualityContext';
@@ -198,6 +198,17 @@ const Dashboard = () => {
               attribution='&copy; <a href="https://carto.com/">CARTO</a>'
             />
             <MapFlyTo coords={coords} />
+            <Circle 
+              center={coords}
+              radius={5000}
+              pathOptions={{
+                color: '#3b82f6',
+                fillColor: '#3b82f6',
+                fillOpacity: 0.1,
+                weight: 1,
+                dashArray: '4 4'
+              }}
+            />
             <MapMarkers />
             <UserLocationMarker coords={coords} />
             <LocateMeButton coords={coords} />
