@@ -36,12 +36,12 @@ const PollutantCard = ({ label, value, unit, max, icon }: PollutantCardProps) =>
             style={{ transition: 'stroke-dashoffset 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)' }}
           />
         </svg>
-        <span className="absolute inset-0 flex items-center justify-center text-sm">{icon}</span>
+        <span className="absolute inset-0 flex items-center justify-center text-base">{icon}</span>
       </div>
       <div className="min-w-0">
-        <p className="text-xs text-muted-foreground font-mono uppercase tracking-wider">{label}</p>
-        <p className="text-lg font-mono font-semibold" style={{ color }}>{value}</p>
-        <p className="text-[10px] text-muted-foreground font-mono">{unit}</p>
+        <p className="text-sm text-muted-foreground font-mono uppercase tracking-wider">{label}</p>
+        <p className="text-xl font-mono font-semibold" style={{ color }}>{value}</p>
+        <p className="text-xs text-muted-foreground font-mono">{unit}</p>
       </div>
     </div>
   );

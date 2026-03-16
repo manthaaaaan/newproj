@@ -28,8 +28,8 @@ const StationDrawer = () => {
           <div className="p-4">
             <div className="flex items-start justify-between mb-4">
               <div>
-                <h3 className="font-heading font-bold text-foreground text-lg">{selectedStation.name}</h3>
-                <span className={`text-xs font-mono ${getAQICategory(selectedStation.aqi).className}`}>
+                <h3 className="font-heading font-bold text-foreground text-xl">{selectedStation.name}</h3>
+                <span className={`text-sm font-mono ${getAQICategory(selectedStation.aqi).className}`}>
                   {getAQICategory(selectedStation.aqi).label}
                 </span>
               </div>
@@ -42,13 +42,13 @@ const StationDrawer = () => {
               <AQIGauge value={selectedStation.aqi} size={180} />
             </div>
 
-            <div className="flex items-center justify-center gap-4 mb-6 text-xs font-mono text-muted-foreground">
-              <span className="flex items-center gap-1"><Thermometer size={12} /> {selectedStation.temp}°C</span>
-              <span className="flex items-center gap-1"><Droplets size={12} /> {selectedStation.humidity}%</span>
+            <div className="flex items-center justify-center gap-4 mb-6 text-sm font-mono text-muted-foreground">
+              <span className="flex items-center gap-1"><Thermometer size={14} /> {selectedStation.temp}°C</span>
+              <span className="flex items-center gap-1"><Droplets size={14} /> {selectedStation.humidity}%</span>
               <span className="flex items-center gap-1">Trend: {trendIcon(selectedStation.trend)}</span>
             </div>
 
-            <h4 className="font-heading font-semibold text-sm text-foreground mb-3">Pollutants</h4>
+            <h4 className="font-heading font-semibold text-base text-foreground mb-3">Pollutants</h4>
             <div className="grid grid-cols-1 gap-2">
               {pollutantInfo.map(p => (
                 <PollutantCard

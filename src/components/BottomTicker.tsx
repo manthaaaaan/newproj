@@ -14,7 +14,7 @@ const BottomTicker = () => {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-[800] glass-card border-t border-border overflow-hidden h-8 flex items-center">
-      <div className="animate-ticker flex font-mono text-xs">
+      <div className="animate-ticker flex font-mono text-sm">
         {content}
         {content}
       </div>

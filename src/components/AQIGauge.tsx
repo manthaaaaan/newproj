@@ -45,14 +45,20 @@ const AQIGauge = ({ value, size = 160, label }: AQIGaugeProps) => {
           strokeDasharray={strokeDash}
           style={{ transition: 'stroke-dasharray 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), stroke 0.4s' }}
         />
-        <text x={cx} y={cy - 15} textAnchor="middle" className="font-mono" fill={color} fontSize="28" fontWeight="600">
+        {/* AQI number — was 32, now 42 */}
+        <text x={cx} y={cy - 15} textAnchor="middle" className="font-mono" fill={color} fontSize="42" fontWeight="700">
           {value}
         </text>
-        <text x={cx} y={cy + 2} textAnchor="middle" className="font-body" fill="hsl(215, 20%, 55%)" fontSize="10">
+        {/* AQI label — was 12, now 16 */}
+        <text x={cx} y={cy + 4} textAnchor="middle" className="font-body" fill="hsl(215, 20%, 55%)" fontSize="16">
           AQI
         </text>
       </svg>
-      {label && <span className="text-xs text-muted-foreground mt-1 font-mono">{label}</span>}
+      {label && (
+        <span className="text-muted-foreground mt-1 font-mono" style={{ fontSize: '15px' }}>
+          {label}
+        </span>
+      )}
     </div>
   );
 };

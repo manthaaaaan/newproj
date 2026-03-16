@@ -50,9 +50,9 @@ const MapMarkers = () => {
       const marker = L.marker([station.lat, station.lng], { icon: createMarkerIcon(station.aqi) })
         .addTo(map)
         .bindPopup(`
-          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;background:#0f172a;color:#e2e8f0;padding:8px;border-radius:8px;min-width:160px;">
-            <strong style="font-family:Syne,sans-serif;font-size:13px;">${station.name}</strong><br/>
-            <span style="color:${getAQIColor(station.aqi)};font-size:18px;font-weight:600;">AQI ${station.aqi}</span><br/>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;background:#0f172a;color:#e2e8f0;padding:8px;border-radius:8px;min-width:180px;">
+            <strong style="font-family:Syne,sans-serif;font-size:15px;">${station.name}</strong><br/>
+            <span style="color:${getAQIColor(station.aqi)};font-size:20px;font-weight:600;">AQI ${station.aqi}</span><br/>
             <span style="color:#94a3b8;">PM2.5: ${station.pm25} µg/m³</span><br/>
             <span style="color:#94a3b8;">${station.temp}°C | ${station.humidity}% RH</span>
           </div>
@@ -160,11 +160,11 @@ const Dashboard = () => {
         {/* Left Sidebar */}
         <div className="w-full lg:w-72 p-4 flex flex-col gap-4 flex-shrink-0">
           <div className="glass-card p-4 text-center">
-            <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest mb-1">{cityName}</p>
+            <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-1">{cityName}</p>
             <AQIGauge value={cityAQI} size={200} />
             <div className="mt-2">
               <span
-                className="inline-block px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold"
+                className="inline-block px-2 py-0.5 rounded-full text-xs font-mono font-semibold"
                 style={{ backgroundColor: category.color + '22', color: category.color, border: `1px solid ${category.color}44` }}
               >
                 {category.label}
@@ -173,13 +173,13 @@ const Dashboard = () => {
           </div>
 
           <div className="glass-card p-3">
-            <h4 className="font-heading text-xs font-semibold text-foreground mb-2">Health Advisory</h4>
-            <p className="text-[11px] font-body text-muted-foreground leading-relaxed">{advisory}</p>
+            <h4 className="font-heading text-sm font-semibold text-foreground mb-2">Health Advisory</h4>
+            <p className="text-sm font-body text-muted-foreground leading-relaxed">{advisory}</p>
           </div>
 
           <div className="glass-card p-3 flex items-center gap-2">
-            <Clock size={12} className="text-primary" />
-            <span className="text-[10px] font-mono text-muted-foreground">Updated {secondsAgo}s ago</span>
+            <Clock size={14} className="text-primary" />
+            <span className="text-xs font-mono text-muted-foreground">Updated {secondsAgo}s ago</span>
             <span className="ml-auto w-2 h-2 rounded-full bg-primary animate-pulse-glow" />
           </div>
         </div>
@@ -217,7 +217,7 @@ const Dashboard = () => {
 
         {/* Right Panel - Pollutants */}
         <div className="w-full lg:w-64 p-4 flex flex-col gap-2 flex-shrink-0 overflow-y-auto">
-          <h3 className="font-heading text-xs font-semibold text-foreground uppercase tracking-widest mb-1">Pollutants (Avg)</h3>
+          <h3 className="font-heading text-sm font-semibold text-foreground uppercase tracking-widest mb-1">Pollutants (Avg)</h3>
           {pollutantInfo.map(p => (
             <PollutantCard
               key={p.key}

@@ -16,8 +16,8 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-[900] glass-card border-b border-border h-12 flex items-center px-4">
       <div className="flex items-center gap-2 mr-8">
-        <div className="w-3 h-3 rounded-full bg-primary animate-pulse-glow" />
-        <span className="font-heading font-bold text-foreground text-sm">
+        <div className="w-3.5 h-3.5 rounded-full bg-primary animate-pulse-glow" />
+        <span className="font-heading font-bold text-foreground text-base">
           <span className="text-primary">Aero</span>Sense
         </span>
       </div>
@@ -28,23 +28,23 @@ const Navbar = () => {
             key={item.to}
             to={item.to}
             className={({ isActive }) =>
-              `flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-mono transition-colors ${
+              `flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-mono transition-colors ${
                 isActive ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
               }`
             }
           >
-            <item.icon size={14} />
+            <item.icon size={16} />
             {item.label}
           </RouterNavLink>
         ))}
       </div>
 
       <div className="ml-auto flex items-center gap-3">
-        <span className="text-xs font-mono text-muted-foreground hidden sm:inline">{cityName}</span>
+        <span className="text-sm font-mono text-muted-foreground hidden sm:inline">{cityName}</span>
         <div className="relative">
-          <Bell size={16} className="text-muted-foreground" />
+          <Bell size={18} className="text-muted-foreground" />
           {alerts.length > 0 && (
-            <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-destructive rounded-full text-[8px] font-mono flex items-center justify-center text-destructive-foreground">
+            <span className="absolute -top-1 -right-1 w-4 h-4 bg-destructive rounded-full text-[10px] font-mono flex items-center justify-center text-destructive-foreground">
               {alerts.length}
             </span>
           )}
@@ -58,12 +58,12 @@ const Navbar = () => {
             key={item.to}
             to={item.to}
             className={({ isActive }) =>
-              `flex flex-col items-center gap-0.5 text-[10px] font-mono transition-colors ${
+              `flex flex-col items-center gap-0.5 text-xs font-mono transition-colors ${
                 isActive ? 'text-primary' : 'text-muted-foreground'
               }`
             }
           >
-            <item.icon size={16} />
+            <item.icon size={18} />
             {item.label}
           </RouterNavLink>
         ))}
